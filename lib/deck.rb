@@ -5,4 +5,12 @@ class Deck
       @cards = cards
     end
 
+    def count
+      cards.count
+    end
+
+    # def cards_in_category
+    #   cards.each do |block_variable|
+    # end
+
 end
