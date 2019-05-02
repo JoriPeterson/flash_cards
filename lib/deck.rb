@@ -22,5 +22,4 @@ class Deck
 
       # cards.select{ |card| card.category == category }
     end
-
 end
