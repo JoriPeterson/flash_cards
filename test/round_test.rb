@@ -61,7 +61,26 @@ class RoundTest < Minitest::Test
 
   def test_correct_count_increases_if_correct
     @enew_turn = @round.take_turn("Juneau")
-    assert_equal 1, @round.count
+    assert_equal 1, @round.number_correct
   end
 
+  def test_take_turn_method_overall
+    assert @round.current_card, @card_1
+    @round.take_turn("Juneau")
+    assert @round.current_card, @card_2
+    @round.take_turn("Venus")
+    assert @round.turns.count, 2
+    assert @round.turns.last.feedback, "Incorrect"
+    assert @round.number_correct, 1
+    assert @round.current_card, @card_3
+  end
+
+  def number_correct_by_category_returns_number_correct_and_percent
+    assert @round.current_card, @card_1
+    @round.take_turn("Juneau")
+    assert @round.number_correct_by_category(:Geography), 1
+    assert @round.number_correct_by_category(:STEM), 0
+    assert @round.percent_correct, 50.0
+    assert @round.percent_correct_by_category(:Geography), 100.0
+  end
 end
