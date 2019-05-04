@@ -11,15 +11,11 @@ class Deck
 
     def cards_in_category(category)
       # return array of the specific category called
-      cat_deck = []
-      @cards.each do |card|
-        if card.category == category
-          cat_deck.push(card)
-        end
+
+      @cards.select do |card|
+        card.category == category
       end
-
-      return cat_deck
-
-      # cards.select{ |card| card.category == category }
     end
 end
+
+      # cards.select{ |card| card.category == category }
