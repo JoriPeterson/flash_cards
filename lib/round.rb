@@ -1,11 +1,10 @@
 class Round
 
-  attr_reader :deck, :turns, :number_correct, :number_correct_by_category
+  attr_reader :deck, :turns, :number_correct
   def initialize(deck)
     @deck = deck
     @turns = []
     @number_correct = 0
-    @number_correct_by_category = 0
   end
 
   def current_card
@@ -14,7 +13,7 @@ class Round
 
   def take_turn(guess)
     @new_turn = Turn.new(guess, current_card)
-    @deck.cards.rotate
+    @deck.cards.rotate!
     @turns << @new_turn
 
       if @new_turn.correct?
@@ -26,9 +25,19 @@ class Round
     # add current turn to turn array
 
   def number_correct_by_category(category)
-    if category && correct?
-      @number_correct_by_category += 1
+
+    num_correct_by_category = 0
+
+    @turns.each do |turn|
+      if turn.card.category == category && turn.correct?
+        num_correct_by_category += 1
+      end
     end
+      return num_correct_by_category
+
+      # look through turns[]
+      # look for category and correctness
+      # increase num correct by cat by 1
   end
 
   def percent_correct
@@ -36,6 +45,10 @@ class Round
   end
 
   def percent_correct_by_category(category)
-    @number_correct_by_category.to_f / cards_in_category(category) * 100
+    number_correct_by_category(category).to_f / @deck.cards_in_category(category).length * 100
+  end
+
+  def start
+    "Welcome! You're playing with 4 cards"
   end
 end
